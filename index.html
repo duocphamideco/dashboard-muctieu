@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b5c4c">
+  <title>IDECO — Dashboard Quản trị Mục tiêu Kinh doanh</title>
+  <style>
+    *{box-sizing:border-box} :root{--green:#08745e;--green2:#0b5c4c;--mint:#e9f7f2;--red:#d92d20;--navy:#14213d;--muted:#65758b;--line:#dfe9e5;--white:#fff}
+    html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#f4f8f6;color:var(--navy)}
+    button,a{font:inherit}.hidden{display:none!important}
+    .shell{min-height:100vh;background:radial-gradient(circle at 80% 5%,#d9f5e9 0,transparent 28%),linear-gradient(135deg,#f8fbfa,#eef6f2)}
+    .topbar{height:76px;padding:0 32px;display:flex;align-items:center;gap:18px;background:rgba(255,255,255,.92);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;backdrop-filter:blur(16px)}
+    .brand{width:46px;height:46px;border-radius:14px;background:linear-gradient(145deg,var(--green),#16a37f);color:#fff;display:grid;place-items:center;font-weight:900;box-shadow:0 10px 22px #08745e35}
+    .brandText{min-width:0}.brandText strong{display:block;font-size:16px;letter-spacing:.02em}.brandText span{font-size:12px;color:var(--muted)}
+    .topActions{margin-left:auto;display:flex;align-items:center;gap:10px}.btn{border:0;border-radius:12px;padding:11px 15px;display:inline-flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none;font-weight:750;transition:.18s}
+    .btn:hover{transform:translateY(-1px)}.btn-light{color:var(--green2);background:#eef7f4;border:1px solid #d2e8e1}.btn-main{background:var(--green);color:#fff;box-shadow:0 8px 18px #08745e2e}
+    .page{max-width:1440px;margin:auto;padding:34px 32px 28px}
+    .hero{background:linear-gradient(115deg,#075d4d 0%,#0c8067 58%,#14a37f 100%);border-radius:26px;padding:34px 38px;color:#fff;display:grid;grid-template-columns:1.4fr .6fr;gap:30px;box-shadow:0 22px 50px #075d4d25;overflow:hidden;position:relative}
+    .hero:after{content:"";position:absolute;width:330px;height:330px;border:65px solid #ffffff10;border-radius:50%;right:-100px;top:-150px}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#bff5df}
+    h1{font-size:clamp(28px,4vw,48px);line-height:1.08;margin:12px 0}.hero p{max-width:760px;margin:0;color:#ddf7ed;line-height:1.6}
+    .agent{align-self:center;background:#ffffff15;border:1px solid #ffffff27;border-radius:20px;padding:20px;backdrop-filter:blur(8px);position:relative;z-index:1}.agentHead{display:flex;gap:12px;align-items:center}.agentIcon{width:48px;height:48px;border-radius:15px;background:#fff;color:var(--green);display:grid;place-items:center;font-size:24px}.agent b{display:block}.agent small{color:#d4f7e9}.status{margin-top:16px;display:flex;align-items:center;gap:9px;font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:#65f5b6;box-shadow:0 0 0 5px #65f5b625}
+    .sectionHead{margin:30px 2px 16px;display:flex;align-items:end;justify-content:space-between}.sectionHead h2{font-size:20px;margin:0}.sectionHead p{margin:5px 0 0;color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;min-height:230px;display:flex;flex-direction:column;box-shadow:0 9px 28px #16372d0c;cursor:pointer;transition:.22s;position:relative;overflow:hidden}.card:hover{transform:translateY(-5px);box-shadow:0 18px 34px #16372d18;border-color:#abd4c7}.card:before{content:"";height:5px;position:absolute;left:0;right:0;top:0;background:var(--accent)}
+    .icon{width:52px;height:52px;border-radius:16px;background:color-mix(in srgb,var(--accent) 12%,white);color:var(--accent);display:grid;place-items:center;font-size:25px}.num{position:absolute;right:20px;top:20px;color:#c7d4cf;font-weight:900;font-size:13px}.card h3{font-size:18px;margin:22px 0 8px}.card p{font-size:13px;color:var(--muted);line-height:1.55;margin:0 0 22px}.open{margin-top:auto;color:var(--accent);font-weight:800;font-size:13px}
+    footer{display:flex;justify-content:space-between;align-items:center;margin-top:26px;padding:18px 4px;color:var(--muted);font-size:12px}.dev{font-weight:800;color:var(--green2)}
+    .workspace{height:100vh;display:flex;flex-direction:column;background:#eef3f1}.workspace.goal-gate .appbar{display:none}.appbar{min-height:64px;display:flex;align-items:center;gap:10px;padding:9px 16px;background:#fff;border-bottom:1px solid var(--line);z-index:30}.appbarTitle{min-width:0;margin:0 8px}.appbarTitle strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.appbarTitle span{display:block;color:var(--muted);font-size:11px}.spacer{flex:1}.iconBtn{border:1px solid var(--line);background:#f8fbfa;color:var(--green2);height:42px;border-radius:12px;padding:0 14px;font-weight:750;cursor:pointer;display:flex;align-items:center;gap:8px}.iconBtn:hover{background:var(--mint)}.homeBtn{background:var(--red);color:#fff;border-color:var(--red)}
+    iframe{border:0;width:100%;flex:1;background:#fff}.loading{position:absolute;inset:64px 0 0;display:grid;place-items:center;background:#f5f8f7;color:var(--green);font-weight:800}.spinner{width:34px;height:34px;border:4px solid #cce5dc;border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;margin:auto auto 12px}@keyframes spin{to{transform:rotate(360deg)}}
+    @media(max-width:1220px){.grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:1050px){.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}.agent{max-width:480px}}
+    @media(max-width:650px){.topbar{padding:0 16px}.brandText span{display:none}.topActions .btn span{display:none}.page{padding:20px 14px}.hero{padding:26px 22px;border-radius:20px}.grid{grid-template-columns:1fr}.card{min-height:190px}.appbar{padding:8px}.iconBtn{padding:0 11px}.iconBtn span{display:none}.appbarTitle{margin:0}.appbarTitle span{display:none}footer{align-items:flex-start;gap:8px;flex-direction:column}}
+  </style>
+</head>
+<body>
+  <main id="dashboard" class="shell">
+    <header class="topbar">
+      <div class="brand">ID</div>
+      <div class="brandText"><strong>HỆ THỐNG AI-AGENT QUẢN LÝ MỤC TIÊU </strong><span> Quản lý chuyên nghiệp là hướng chúng ta phát phát triển</span></div>
+      <div class="topActions">
+        <button class="btn btn-light" onclick="toggleDashboardFullscreen()" title="Toàn màn hình"><b>⛶</b><span>Toàn màn hình</span></button>
+        <a class="btn btn-main" href="https://erp-ideco.skyit.vn/#/app/dashboard/main"><b>⌂</b><span>HOME ERP</span></a>
+      </div>
+    </header>
+    <div class="page">
+      <section class="hero">
+        <div><div class="eyebrow">Management Dashboard · IDECO</div><h1>Quản trị mục tiêu kinh doanh</h1><p>Quản lý công việc theo MỤC TIÊU là thước đo năng lực và chuyên nghiệp .Chúng ta hãy cùng nhau và không thỏa hiệp trong việc mở khách hàng mới mỗi tuần- kiểm soát thanh khoản tốt- SOP chuẩn tra cứu .</p></div>
+        <div class="agent"><div class="agentHead"><div class="agentIcon">✦</div><div><b>Business Agent Center</b><small>Trung tâm điều phối quản trị</small></div></div><div class="status"><span class="dot"></span>5 mô-đun nghiệp vụ sẵn sàng</div></div>
+      </section>
+      <div class="sectionHead"><div><h2>Bảng điều hành tổng thể</h2><p>Chọn một mô-đun để mở không gian làm việc chuyên biệt</p></div></div>
+      <section class="grid" id="moduleGrid"></section>
+      <footer><span>Hệ thống quản trị nội bộ Công ty IDECO</span><span class="dev">Ứng dun được phát triển bởi: MTRIET</span></footer>
+    </div>
+  </main>
+  <section id="workspace" class="workspace hidden">
+    <div class="appbar">
+      <button class="iconBtn" onclick="backDashboard()" title="Quay lại Dashboard">← <span>Dashboard</span></button>
+      <div class="appbarTitle"><strong id="appTitle">Ứng dụng</strong><span>IDECO Trung tâm điều hành mục tiêu</span></div>
+      <div class="spacer"></div>
+      <button class="iconBtn" onclick="reloadApp()" title="Tải lại ứng dụng">↻ <span>Tải lại</span></button>
+      <button class="iconBtn" onclick="toggleAppFullscreen()" title="Toàn màn hình">⛶ <span>Toàn màn hình</span></button>
+      <a class="iconBtn homeBtn" href="https://erp-ideco.skyit.vn/#/app/dashboard/main" title="Về HOME ERP">⌂ <span>HOME ERP</span></a>
+    </div>
+    <div id="loading" class="loading"><div><div class="spinner"></div>Đang mở ứng dụng...</div></div>
+    <iframe id="appFrame" title="Ứng dụng IDECO" allow="microphone; camera; clipboard-read; clipboard-write; fullscreen"></iframe>
+  </section>
+  <script>
+    const modules=[
+      {title:'Mục tiêu kinh doanh',file:'apps/MUC_TIEU_KINH_DOANH.html',icon:'◎',accent:'#08745e',desc:'Thiết lập và theo dõi các mục tiêu kinh doanh trọng tâm theo tháng.'},
+      {title:'KPI tổ chức',file:'apps/KPI_TO_CHUC.html',icon:'▦',accent:'#2563eb',desc:'Quản lý, đánh giá chỉ tiêu hiệu suất và năng lực của tổ chức.'},
+      {title:'Kế hoạch',file:'apps/KE_HOACH.html',icon:'✓',accent:'#e28712',desc:'Thiết lập, triển khai và theo dõi kế hoạch hành động kinh doanh.'},
+      {title:'Báo cáo giao dịch khách hàng',file:'apps/BAO_CAO_GIAO_DICH_KH.html',icon:'◉',accent:'#7c3aed',desc:'Khai báo, cập nhật và phân tích hoạt động giao dịch khách hàng.'},
+      {title:'Báo cáo cuối tháng',file:'apps/BAO_CAO_CUOI_THANG.html',icon:'▤',accent:'#d92d20',desc:'Tổng hợp báo cáo tháng và phân tích các nội dung kinh doanh trọng tâm.'}
+    ];
+    const grid=document.getElementById('moduleGrid'),frame=document.getElementById('appFrame'),workspace=document.getElementById('workspace');
+    let goalGateActive=true;
+    modules.forEach((m,i)=>{const el=document.createElement('article');el.className='card';el.style.setProperty('--accent',m.accent);el.tabIndex=0;el.innerHTML=`<span class="num">0${i+1}</span><div class="icon">${m.icon}</div><h3>${m.title}</h3><p>${m.desc}</p><div class="open">MỞ ỨNG DỤNG →</div>`;el.onclick=()=>openApp(m);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' ')openApp(m)};grid.appendChild(el)});
+    function openApp(m,gateMode=false){if(goalGateActive&&!gateMode&&m!==modules[0])return;document.getElementById('dashboard').classList.add('hidden');workspace.classList.remove('hidden');workspace.classList.toggle('goal-gate',gateMode);document.getElementById('appTitle').textContent=m.title;document.getElementById('loading').classList.remove('hidden');const auto=m.file.includes('MUC_TIEU_KINH_DOANH')?`?dashboard=1&autoOpen=1${gateMode?'&goalGate=1':''}`:'';frame.src=m.file+auto;history.pushState({app:m.file},'',location.pathname+'#'+encodeURIComponent(m.title))}
+    frame.addEventListener('load',()=>document.getElementById('loading').classList.add('hidden'));
+    function backDashboard(){if(goalGateActive)return;frame.src='about:blank';workspace.classList.remove('goal-gate');workspace.classList.add('hidden');document.getElementById('dashboard').classList.remove('hidden');history.replaceState({},'',location.pathname)}
+    function reloadApp(){try{frame.contentWindow.location.reload()}catch(e){frame.src=frame.src}}
+    function toggleAppFullscreen(){const el=document.getElementById('workspace');if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.()}
+    function toggleDashboardFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();else document.exitFullscreen?.()}
+    window.addEventListener('popstate',()=>{if(!location.hash)backDashboard()});
+    window.addEventListener('message',e=>{if(e.source===frame.contentWindow&&e.data&&e.data.type==='IDECO_GOAL_ACK'){goalGateActive=false;workspace.classList.remove('goal-gate');backDashboard()}});
+    /*
+      Quy tắc khởi động IDECO:
+      Mỗi lần mở hệ thống, Mục tiêu kinh doanh được đưa ra trước để toàn thể
+      nhân sự đọc mục tiêu rồi mới quay về Dashboard thao tác các mô-đun khác.
+    */
+    window.addEventListener('DOMContentLoaded',()=>setTimeout(()=>openApp(modules[0],true),3000));
+  </script>
+</body>
+</html>
